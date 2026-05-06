@@ -10,3 +10,4 @@ transformers
 sentence-transformers
 numpy
 scipy
+python-dotenv
