@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+motor
+bcrypt
+passlib[bcrypt]
+python-jose[cryptography]
+pydantic
+torch
+transformers
+sentence-transformers
+numpy
+scipy
