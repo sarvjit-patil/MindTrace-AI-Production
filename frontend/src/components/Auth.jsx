@@ -38,7 +38,7 @@ export default function Auth({ onLogin, onDemo }) {
     setLoading(true);
     setError(null);
     try {
-      const backendUrl = `https://mindtrace-ai-production.onrender.com/api/auth/${isLogin ? 'login' : 'register'}`;
+      const backendUrl = `https://mindtrace-ai-production-1.onrender.com/api/auth/${isLogin ? 'login' : 'register'}`;
       const payload = isLogin ? { email: formData.email, password: formData.password } : { ...formData, interests: selectedInterests };
       const res = await axios.post(backendUrl, payload);
       localStorage.setItem("mindtrace_token", res.data.access_token);
@@ -262,7 +262,7 @@ export default function Auth({ onLogin, onDemo }) {
               setLoading(true);
               setError(null);
               try {
-                await axios.post(`https://mindtrace-ai-production.onrender.com/api/auth/reset-password`, {
+                await axios.post(`https://mindtrace-ai-production-1.onrender.com/api/auth/reset-password`, {
                   email: forgotEmail,
                   new_password: resetPasswordStr
                 });

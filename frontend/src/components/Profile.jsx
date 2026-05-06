@@ -15,7 +15,7 @@ export default function Profile({ onLogout }) {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("mindtrace_token");
-        const res = await axios.get(`https://mindtrace-ai-production.onrender.com/api/auth/profile?token=${token}`);
+        const res = await axios.get(`https://mindtrace-ai-production-1.onrender.com/api/auth/profile?token=${token}`);
         setProfile(res.data);
       } catch (err) {
         setError("Failed to load profile. Session might be expired.");
@@ -154,7 +154,7 @@ export default function Profile({ onLogout }) {
                   if (!newPassword) return;
                   try {
                     const token = localStorage.getItem("mindtrace_token");
-                    await axios.put(`https://mindtrace-ai-production.onrender.com/api/auth/password?token=${token}`, { new_password: newPassword });
+                    await axios.put(`https://mindtrace-ai-production-1.onrender.com/api/auth/password?token=${token}`, { new_password: newPassword });
                     setPwdStatus('Password updated successfully!');
                     setTimeout(() => { setShowPasswordModal(false); setPwdStatus(null); setNewPassword(''); }, 2000);
                   } catch (err) {
