@@ -101,7 +101,7 @@ export default function Home({ onSaveEntry, isDemo, isAuthenticated, demoCount, 
       if (isDemo && !isAuthenticated) {
         onDemoAnalyze();
       }
-      const backendUrl = `https://mindtrace-backend-ygob.onrender.com/api/analyze`;
+      const backendUrl = `https://mindtrace-ai-production.onrender.com/api/analyze`;
       const response = await axios.post(backendUrl, {
         text: text,
       });

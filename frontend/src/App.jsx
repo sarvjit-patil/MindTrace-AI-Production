@@ -49,7 +49,7 @@ function App() {
       setIsAuthenticated(true);
 
       // Fetch User Profile for Name
-      axios.get(`https://mindtrace-backend-ygob.onrender.com/api/auth/profile?token=${token}`)
+      axios.get(`https://mindtrace-ai-production.onrender.com/api/auth/profile?token=${token}`)
         .then(res => {
           if (res.data && res.data.full_name) {
             setUserName(res.data.full_name.split(' ')[0]);
@@ -58,7 +58,7 @@ function App() {
         .catch(err => console.error("Profile Fetch Error", err));
 
       // Fetch DB Entries!
-      axios.get(`https://mindtrace-backend-ygob.onrender.com/api/entries?token=${token}`)
+      axios.get(`https://mindtrace-ai-production.onrender.com/api/entries?token=${token}`)
         .then(res => {
           if (res.data) setEntries(res.data);
         })
@@ -125,7 +125,7 @@ function App() {
     if (isAuthenticated) {
       try {
         const token = localStorage.getItem('mindtrace_token');
-        await axios.post(`https://mindtrace-backend-ygob.onrender.com/api/entries?token=${token}`, {
+        await axios.post(`https://mindtrace-ai-production.onrender.com/api/entries?token=${token}`, {
           text: newEntry.text,
           emotion: newEntry.analysis.emotion,
           wellness_index: newEntry.analysis.wellness_index,
@@ -163,7 +163,7 @@ function App() {
           payload.wellness_index = newAnalysisData.wellness_index;
           payload.risk_level = newAnalysisData.risk_level;
         }
-        await axios.put(`https://mindtrace-backend-ygob.onrender.com/api/entries/${entryId}?token=${token}`, payload);
+        await axios.put(`https://mindtrace-ai-production.onrender.com/api/entries/${entryId}?token=${token}`, payload);
       } catch (err) { console.error("Edit error", err); }
     } else {
       localStorage.setItem('mindtrace_entries', JSON.stringify(updated));
@@ -176,7 +176,7 @@ function App() {
 
     // 2. Run the heavy AI analysis in the background
     try {
-      const aiRes = await axios.post(`https://mindtrace-backend-ygob.onrender.com/api/analyze`, { text: newText });
+      const aiRes = await axios.post(`https://mindtrace-ai-production.onrender.com/api/analyze`, { text: newText });
 
       // 3. Silently update the entry again with the new emotion statistics once AI finishes
       await editEntry(entryId, newText, aiRes.data);
@@ -193,7 +193,7 @@ function App() {
     if (isAuthenticated) {
       try {
         const token = localStorage.getItem('mindtrace_token');
-        await axios.delete(`https://mindtrace-backend-ygob.onrender.com/api/entries/${entryId}?token=${token}`);
+        await axios.delete(`https://mindtrace-ai-production.onrender.com/api/entries/${entryId}?token=${token}`);
       } catch (err) { console.error("Delete error", err); }
     } else {
       localStorage.setItem('mindtrace_entries', JSON.stringify(updated));
