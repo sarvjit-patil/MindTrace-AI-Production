@@ -4,8 +4,7 @@ import os
 import random
 from typing import Dict, Any
 
-from ai.emotion.analyzer import EmotionAnalyzer
-from ai.sentiment.analyzer import SentimentAnalyzer
+
 from ai.scoring.wellness import WellnessIndexEngine
 from ai.risk_detection.monitor import RiskDetector
 from ai.recommendation.engine import RecommendationEngine
@@ -22,6 +21,8 @@ class MindTraceAIEngine:
             # We skip loading the heavy transformers. The app will use rule-based Mock AI.
         else:
             print("Loading Hugging Face models into memory...")
+            from ai.emotion.analyzer import EmotionAnalyzer
+            from ai.sentiment.analyzer import SentimentAnalyzer
             self.emotion_analyzer = EmotionAnalyzer()
             self.sentiment_analyzer = SentimentAnalyzer()
             

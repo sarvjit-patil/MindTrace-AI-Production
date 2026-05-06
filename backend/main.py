@@ -8,6 +8,7 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from bson import ObjectId
 from pydantic import BaseModel
+import asyncio
 
 app = FastAPI(title="MindTrace AI Backend", description="Backend for the Reflectly-like Journaling App")
 
@@ -29,18 +30,24 @@ engine = None
 
 @app.on_event("startup")
 async def startup_event():
-    global engine
     print("\n" + "="*60)
-    print("🚀 INITIALIZING MINDTRACE AI ENGINE...")
+    print("🚀 INITIALIZING MINDTRACE AI ENGINE IN BACKGROUND...")
+    print("⏳ This prevents port binding timeouts on cloud platforms.")
+    print("="*60 + "\n")
+    asyncio.create_task(init_engine_background())
+
+async def init_engine_background():
+    global engine
     print("⏳ Loading Neural Networks into Memory (Hugging Face Models).")
     print("⚠️  If this is your first time, it is DOWNLOADING the models (~500MB).")
     print("⚠️  This can take 3-5 minutes depending on your internet speed.")
     print("⚠️  Please DO NOT close the terminal. Be patient!")
-    print("="*60 + "\n")
-    engine = MindTraceAIEngine()
+    # To prevent any thread blocking, we could run the instantiation in a thread,
+    # but since MindTraceAIEngine handles is_render, we'll just instantiate it.
+    engine = await asyncio.to_thread(MindTraceAIEngine)
     print("\n" + "="*60)
     print("✅ AI MODELS LOADED AND CACHED SUCCESSFULLY!")
-    print("✅ SERVER IS NOW READY TO ACCEPT MOBILE REQUESTS!")
+    print("✅ SERVER IS NOW READY TO FULLY PROCESS AI REQUESTS!")
     print("="*60 + "\n")
 
 @app.post("/api/analyze", response_model=AIResponse)
